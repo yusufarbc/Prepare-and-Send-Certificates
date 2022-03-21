@@ -56,7 +56,6 @@ class App():
             path = "certificates/{}.png".format(text)
             certificate.save(path)
             print("{}.png is created".format(text))
-            sleep(0.5)
 
     def prepareMail(self, row):
         mail = MIMEMultipart()
