@@ -14,8 +14,8 @@ class App():
         self.mailList = "list.csv"
 
         #login configs
-        self.username = "*******"
-        self.password = "*******"
+        self.username = "***********"
+        self.password = "**********"
 
         #mail configs
         self.subject = "Sertifikanız Hazır"
@@ -68,7 +68,7 @@ class App():
 
         with open("certificates/"+row[1]+".png", 'rb') as fp:
             img = MIMEImage(fp.read())
-            img.add_header('Sertifika', 'attachment', filename= row[1]+".png")
+            img.add_header('Content-Disposition', 'attachment', filename= row[1]+".png")
             mail.attach(img)
         mail = mail.as_string()
 
@@ -82,9 +82,12 @@ class App():
                 smtpObj.login(self.username, self.password)
                 for i in self.rows:
                     mail = self.prepareMail(i)
-                    smtpObj.sendmail(self.username, i[2], mail)
-                    print("mail sended to {}".format(i[2]))
-                    sleep(5)
+                    try:
+                        smtpObj.sendmail(self.username, i[2], mail)
+                        print("mail sended to {}".format(i[2]))
+                    except Exception as e:
+                        print(e)
+                    sleep(3)
         except Exception as e:
             print(e)
 
@@ -95,7 +98,7 @@ if __name__=="__main__":
     app.prepareCertificates()
     print("certificates are created")
     while True:
-        confirm = input("Send mails? yes/no: ")
+        confirm = input("Send mails? (yes/no): ")
         if confirm == "yes":
             app.sendMails()
             break
@@ -103,4 +106,5 @@ if __name__=="__main__":
             exit()
         else:
             print("wrong word. try again")
-    print("transaction terminated")
+    print("transaction terminated\npress any key to continue...")
+    input()
