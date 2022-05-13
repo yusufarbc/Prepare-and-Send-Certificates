@@ -52,6 +52,7 @@ class App():
             print("directorry can't generated")
         for i in self.rows:
             text = i[1]
+            text = text.upper()
             certificate = self.createCertificate(text)
             path = "certificates/{}.png".format(text)
             certificate.save(path)
@@ -87,7 +88,7 @@ class App():
                         print("mail sended to {}".format(i[2]))
                     except Exception as e:
                         print(e)
-                    sleep(3)
+                    sleep(2)
         except Exception as e:
             print(e)
 
